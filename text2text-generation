@@ -1,0 +1,16 @@
+#把文字轉換成文字，可做翻譯、摘要、改寫等。
+from transformers import pipeline
+
+# 建立 text2text-generation pipeline
+translator = pipeline("text2text-generation", model="t5-small")  # 使用 T5 小模型
+
+# 範例 1：英文翻譯成法文
+prompt = "translate English to French: I love programming and AI."
+result = translator(prompt, max_new_tokens=50)
+print("翻譯結果：", result[0]['generated_text'])
+
+# 範例 2：文字摘要
+summarizer = pipeline("text2text-generation", model="t5-small")
+text = "Hugging Face is a company that develops tools and models for natural language processing. They provide open-source libraries, datasets, and tutorials."
+summary_result = summarizer("summarize: " + text, max_new_tokens=50)
+print("摘要結果：", summary_result[0]['generated_text'])
