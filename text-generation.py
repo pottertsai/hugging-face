@@ -1,3 +1,4 @@
+#功能：給一段文字，生成後續文字。
 from transformers import pipeline
 
 # 建立文字生成 pipeline
