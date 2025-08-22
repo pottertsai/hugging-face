@@ -1,0 +1,30 @@
+from diffusers import StableDiffusionPipeline
+import torch
+from PIL import Image
+
+# 設定 prompt（英文效果最佳）
+prompt = "A car on a sunny street, Studio Ghibli style, soft lighting, detailed, vibrant colors"
+
+# 自動選擇設備
+device = "cuda" if torch.cuda.is_available() else "cpu"
+print("使用設備：", device)
+
+# 載入吉卜力風格模型
+pipe = StableDiffusionPipeline.from_pretrained(
+    "nitrosocke/Ghibli-Diffusion",
+    torch_dtype=torch.float16 if device=="cuda" else torch.float32
+).to(device)
+
+# 生成圖片
+image = pipe(
+    prompt,
+    height=512,
+    width=512,
+    num_inference_steps=50,
+    guidance_scale=7.5
+).images[0]
+
+# 顯示與保存
+image.show()
+image.save("ghibli_car.png")
+print("圖片已保存：ghibli_car.png")
