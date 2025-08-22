@@ -1,0 +1,21 @@
+from transformers import pipeline
+
+# 建立零樣本分類 pipeline
+classifier = pipeline("zero-shot-classification", model="facebook/bart-large-mnli")
+
+# 要分析的評論
+texts = [
+    "服務員態度非常不耐煩，上菜也慢。",
+    "這家餐廳的甜點超級好吃，推薦必吃！",
+    "價格偏高，但食物還算美味。",
+    "店內環境乾淨舒適，很有氣氛。"
+]
+
+# 自訂分類標籤
+candidate_labels = ["服務", "食物", "價格", "環境"]
+
+# 分類
+for text in texts:
+    result = classifier(text, candidate_labels)
+    print(f"文本：{text}")
+    print(f"分類：{result['labels'][0]}, 信心度：{result['scores'][0]:.4f}\n")
