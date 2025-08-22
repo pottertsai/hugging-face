@@ -1,0 +1,12 @@
+from transformers import pipeline
+
+qa_pipeline = pipeline(
+    "question-answering",
+    model="ckiplab/bert-base-chinese-qa"  # 中文 QA 微調模型
+)
+
+context = "小明今天在台北101吃了鼎泰豐，消費了2000元。他還去了信義區逛街。"
+question = "小明今天在哪裡吃飯？"
+
+result = qa_pipeline(question=question, context=context)
+print(f"答案：{result['answer']}, 信心度：{result['score']:.4f}")
