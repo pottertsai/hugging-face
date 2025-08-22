@@ -1,0 +1,15 @@
+from transformers import pipeline
+
+# 英文 NER 模型
+ner_pipeline = pipeline(
+    "token-classification",
+    model="dbmdz/bert-large-cased-finetuned-conll03-english",
+    aggregation_strategy="simple"  # 自動合併 token
+)
+
+text = "John Smith visited Google in New York on August 22, 2025 and spent $2000."
+
+results = ner_pipeline(text)
+
+for ent in results:
+    print(f"詞：{ent['word']}, 類型：{ent['entity_group']}, 信心度：{ent['score']:.4f}")
